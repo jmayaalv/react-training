@@ -5,7 +5,6 @@
 // - render a <ul> with each of DATA.items as an <li>
 // - now only render an <li> for mexican food (hint: use DATA.items.filter(...))
 // - sort the items in alphabetical order by name (hint: use sort-by https://github.com/staygrimm/sort-by#example)
-// - try this again without JSX
 //
 // Got extra time?
 // - add a select dropdown to make filtering on `type` dynamic
@@ -27,10 +26,35 @@ var DATA = {
   ]
 };
 
+function renderItems(items){
+  items = items.filter(i => i.type == 'mexican').sort(sortBy('name'));
+  return items.map( i => (<li>{i.name}</li>) );
+}
+
+function addFilter(types){
+  console.log(types)
+  return (<select>
+          {types.map( t => (<option>{t}</option>) )}
+        </select>);
+}
+
+
 function render() {
+  var uniqueTypes = [];
+  DATA.items.forEach(item => {
+    if (uniqueTypes.indexOf(item.type) < 0){
+      return uniqueTypes.push(item.type);
+    }
+  });
   return (
     <div>
-      Open the console, you have failing tests
+      {addFilter(uniqueTypes)}
+      <div>
+        <h1>{DATA.title}</h1>
+        <ul> 
+          {renderItems(DATA.items)}
+        </ul>
+      </div>
     </div>
   );
 }

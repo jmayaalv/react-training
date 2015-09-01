@@ -9,6 +9,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 var React = require('react');
+var {arrayOf, shape, number, string} = React.PropTypes;
+
+var country = shape({
+  id: number.isRequired,
+  name: string.isRequired,
+  description: string.isRequired
+});
 
 var DATA = [
   { id: 1, name: 'USA', description: 'Land of the Free, Home of the brave' },
@@ -37,24 +44,48 @@ styles.panel = {
 };
 
 var Tabs = React.createClass({
+  propTypes: {
+    data: arrayOf(country)
+  },
+
+  getInitialState(){
+    return {
+      activeTabIndex: 0
+    }
+  },
+
+  renderTabPanel(data){
+    console.log(data);
+    return (<div className="TabPanels" style={styles.panel}> {data[this.state.activeTabIndex].description}</div>);
+  },
+
+  renderTab(tab, index){
+    var isActive = (index === this.state.activeTabIndex);
+    var style = (isActive ? styles.activeTab : styles.tab);
+    return <div className="Tab" style={style} onClick={()=> this.handleClick(index)}>{tab.name}</div>
+  },
+
+  handleClick(index){
+    this.setState({
+      activeTabIndex: index
+    });
+  },
+
   render () {
     return (
       <div className="Tabs">
-        <div className="Tab" style={styles.tab}>
-          Inactive
-        </div>
-        <div className="Tab" style={styles.activeTab}>
-          Active
-        </div>
-        <div className="TabPanels" style={styles.panel}>
-          Panel
-        </div>
+        {this.props.data.map((tab, index) => this.renderTab(tab, index))}
+        {this.renderTabPanel(this.props.data)}
       </div>
     );
   }
 });
 
 var App = React.createClass({
+  propTypes: {
+    countries: arrayOf(country)
+  },
+
   render () {
     return (
       <div>

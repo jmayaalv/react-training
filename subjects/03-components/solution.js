@@ -47,18 +47,7 @@ var Tabs = React.createClass({
   render() {
     var activeTab = this.props.data[this.state.activeTabIndex];
 
-    return (
-      <div className="Tabs">
-        {this.props.data.map((d, i) => (
-          <div key={d.id} className="Tab" onClick={this.handleClick.bind(this, i)} style={i == this.state.activeTabIndex ? styles.activeTab : styles.tab}>
-            {d.name}
-          </div>
-        ))}
-        <div className="TabPanels" style={styles.panel}>
-          {activeTab.description}
-        </div>
-      </div>
-    );
+    
   }
 });
 

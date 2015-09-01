@@ -152,7 +152,7 @@ function padMonth(index) {
 // React how to solve a problem in your app, you can use everything you know
 // about programming already.
 function monthOption(month, index) {
-  return <option>({padMonth(index)}) {month})</option>;
+  return <option>({padMonth(index)}) {month}</option>;
 }
 
 function monthSelect() {
